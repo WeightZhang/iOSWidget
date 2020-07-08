@@ -38,31 +38,26 @@ struct SimpleEntry: TimelineEntry {
 
 struct PlaceholderView : View {
     var body: some View {
-        Text("Placeholder View")
+        Text("Placeholder View")    //Staticlly set image
+        /*
+         Image("Piper")
+             .resizable()
+             .aspectRatio(contentMode: .fit)
+         */
     }
 }
 
-struct Data {
-    var storedValue1: String = ""
-    var storedValue2: String = ""
-    var storedValue3: String = ""
-    var storedValue4: String = ""
-    var storedValue5: String = ""
-    var backgroundIndex: Int = 0
+struct DataStruct {
+    var storedImgData: Data!
 }
 
-func getData() -> Data {
-    var data: Data = Data()
+func getData() -> DataStruct {
+    var data: DataStruct = DataStruct()
     
     if let userDefaults = UserDefaults(suiteName: "group.com.putterfitter.NotesWidget") {
-        data.storedValue1 = userDefaults.string(forKey: "TEXT1") ?? ""
-        data.storedValue2 = userDefaults.string(forKey: "TEXT2") ?? ""
-        data.storedValue3 = userDefaults.string(forKey: "TEXT3") ?? ""
-        data.storedValue4 = userDefaults.string(forKey: "TEXT4") ?? ""
-        data.storedValue5 = userDefaults.string(forKey: "TEXT5") ?? ""
-        data.backgroundIndex = userDefaults.integer(forKey: "BACKGROUND")
+        data.storedImgData = userDefaults.data(forKey: "IMG_DATA")
     }
-    print(data)
+    
     return data
 }
 
@@ -70,21 +65,14 @@ struct NotesWidgetTargetEntryView : View {
     var entry: Provider.Entry
     
     var data = getData()
-
-    let SelectedColor: [Color] = [Color.black, Color.white, Color.red, Color.orange, Color.yellow, Color.green, Color.blue]
     
     var body: some View {
         VStack{
-            //data.storedValue1 == "" ? nil : Text(data.storedValue1)
-            //data.storedValue2 == "" ? nil : Text(data.storedValue2)
-            //data.storedValue3 == "" ? nil : Text(data.storedValue3)
-            //data.storedValue4 == "" ? nil : Text(data.storedValue4)
-            //data.storedValue5 == "" ? nil : Text(data.storedValue5)
-            Image("Piper")
+            Image(uiImage: UIImage.init(data: data.storedImgData) ?? UIImage.init(named: "Piper")!)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
 
-        }.background(SelectedColor[data.backgroundIndex])
+        }.background(Color.black)
     }
 }
 
@@ -96,7 +84,7 @@ struct NotesWidgetTarget: Widget {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider(), placeholder: PlaceholderView()) { entry in
             NotesWidgetTargetEntryView(entry: entry)
         }
-        .configurationDisplayName("Note Pad")
-        .description("View up to five lines of custom text.")
+        .configurationDisplayName("Picture Box")
+        .description("View a picture on your home screen.")
     }
 }

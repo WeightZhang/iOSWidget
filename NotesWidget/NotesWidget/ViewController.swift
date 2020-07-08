@@ -7,77 +7,54 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
 
     @IBOutlet weak var ImageView: UIImageView!
     @IBOutlet weak var SelectImageButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                
-        //if let userDefaults = UserDefaults(suiteName: "group.com.putterfitter.NotesWidget") {
-            //TextBox1.text = userDefaults.string(forKey: "TEXT1") ?? ""
-            //TextBox2.text = userDefaults.string(forKey: "TEXT2") ?? ""
-            //TextBox3.text = userDefaults.string(forKey: "TEXT3") ?? ""
-            //TextBox4.text = userDefaults.string(forKey: "TEXT4") ?? ""
-            //TextBox5.text = userDefaults.string(forKey: "TEXT5") ?? ""
-        //}
-        
-        updateStoredValue()
-    }
-    @IBAction func SelectImageClicked(_ sender: Any) {
+
+        loadStoredValue()
     }
     
-    @IBAction func SaveClicked(_ sender: Any) {
-        //let text1 = TextBox1.text
-        //let text2 = TextBox2.text
-        //let text3 = TextBox3.text
-        //let text4 = TextBox4.text
-        //let text5 = TextBox5.text
-        
-        //if let userDefaults = UserDefaults(suiteName: "group.com.putterfitter.NotesWidget") {
-        //    userDefaults.set((text1 ?? "") as String, forKey: "TEXT1")
-        //    userDefaults.set((text2 ?? "") as String, forKey: "TEXT2")
-        //    userDefaults.set((text3 ?? "") as String, forKey: "TEXT3")
-        //    userDefaults.set((text4 ?? "") as String, forKey: "TEXT4")
-        //    userDefaults.set((text5 ?? "") as String, forKey: "TEXT5")
-        //}
-
-        updateStoredValue()
-    }
-    @IBAction func SliderChanged(_ sender: Any) {
-        //TextPreview.backgroundColor = SelectedColor[ColorSlider.selectedSegmentIndex]
-        //if let userDefaults = UserDefaults(suiteName: "group.com.putterfitter.NotesWidget") {
-        //    userDefaults.set((ColorSlider.selectedSegmentIndex) as Int, forKey: "BACKGROUND")
-        //}
+    var uploadedImage: UIImage!
+    
+    @IBAction func SelectImageClicked(_ sender: Any) {
+        let picker = UIImagePickerController()
+            picker.allowsEditing = true
+            picker.delegate = self
+            present(picker, animated: true)
     }
     
     func updateStoredValue(){
-        /*var storedValue1: String = ""
-        var storedValue2: String = ""
-        var storedValue3: String = ""
-        var storedValue4: String = ""
-        var storedValue5: String = ""
-
-        if let userDefaults = UserDefaults(suiteName: "group.com.putterfitter.NotesWidget") {
-            storedValue1 = userDefaults.string(forKey: "TEXT1") ?? ""
-            storedValue2 = userDefaults.string(forKey: "TEXT2") ?? ""
-            storedValue3 = userDefaults.string(forKey: "TEXT3") ?? ""
-            storedValue4 = userDefaults.string(forKey: "TEXT4") ?? ""
-            storedValue5 = userDefaults.string(forKey: "TEXT5") ?? ""
+        if let imgData = uploadedImage?.pngData(){
+            if let userDefaults = UserDefaults(suiteName: "group.com.putterfitter.NotesWidget"){
+                userDefaults.set(imgData as Data, forKey: "IMG_DATA")
+            }
         }
         
-        TextPreview.text = ""
-        TextPreview.text.append(storedValue1)
-        TextPreview.text.append("\n")
-        TextPreview.text.append(storedValue2)
-        TextPreview.text.append("\n")
-        TextPreview.text.append(storedValue3)
-        TextPreview.text.append("\n")
-        TextPreview.text.append(storedValue4)
-        TextPreview.text.append("\n")
-        TextPreview.text.append(storedValue5)
-        */
+        ImageView.image = uploadedImage
+        ImageView.contentMode = .scaleAspectFill
+    }
+    func loadStoredValue(){
+        var storedImgData: Data!
+        if let userDefaults = UserDefaults(suiteName: "group.com.putterfitter.NotesWidget") {
+            storedImgData = userDefaults.data(forKey: "IMG_DATA")
+        }
+        if(storedImgData != nil){
+            ImageView.image = UIImage.init(data: storedImgData)
+            ImageView.contentMode = .scaleAspectFill
+        }
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let image = info[.editedImage] as? UIImage else { return }
+
+        dismiss(animated: true)
+
+        uploadedImage = image
+        updateStoredValue()
     }
 
 }
