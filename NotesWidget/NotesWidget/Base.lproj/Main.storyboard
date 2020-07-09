@@ -24,9 +24,9 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="highlightedColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MwG-GD-Red">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DefaultImage" translatesAutoresizingMaskIntoConstraints="NO" id="MwG-GD-Red">
                                 <rect key="frame" x="20" y="92" width="374" height="374"/>
-                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="MwG-GD-Red" secondAttribute="height" multiplier="374:374" id="zzg-fX-lv3"/>
                                 </constraints>
@@ -67,4 +67,7 @@
             <point key="canvasLocation" x="18.840579710144929" y="107.8125"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="DefaultImage" width="1000" height="1000"/>
+    </resources>
 </document>

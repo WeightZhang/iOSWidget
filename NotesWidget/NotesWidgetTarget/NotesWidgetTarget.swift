@@ -38,12 +38,10 @@ struct SimpleEntry: TimelineEntry {
 
 struct PlaceholderView : View {
     var body: some View {
-        Text("Placeholder View")    //Staticlly set image
-        /*
-         Image("Piper")
+        //Staticlly set image
+         Image("DefaultImage")
              .resizable()
              .aspectRatio(contentMode: .fit)
-         */
     }
 }
 
@@ -58,6 +56,10 @@ func getData() -> DataStruct {
         data.storedImgData = userDefaults.data(forKey: "IMG_DATA")
     }
     
+    if(data.storedImgData == nil){
+        data.storedImgData = UIImage(named: "DefaultImage")?.pngData()
+    }
+    
     return data
 }
 
@@ -65,10 +67,10 @@ struct NotesWidgetTargetEntryView : View {
     var entry: Provider.Entry
     
     var data = getData()
-    
+        
     var body: some View {
         VStack{
-            Image(uiImage: UIImage.init(data: data.storedImgData) ?? UIImage.init(named: "Piper")!)
+            Image(uiImage: UIImage.init(data: data.storedImgData)!)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
 
@@ -79,12 +81,17 @@ struct NotesWidgetTargetEntryView : View {
 @main
 struct NotesWidgetTarget: Widget {
     private let kind: String = "NotesWidgetTarget"
-
+    
     public var body: some WidgetConfiguration {
-        IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider(), placeholder: PlaceholderView()) { entry in
+        IntentConfiguration(
+            kind: kind,
+            intent: ConfigurationIntent.self,
+            provider: Provider(),
+            placeholder: PlaceholderView()) { entry in
             NotesWidgetTargetEntryView(entry: entry)
         }
         .configurationDisplayName("Picture Box")
         .description("View a picture on your home screen.")
+        .supportedFamilies([.systemSmall])
     }
 }

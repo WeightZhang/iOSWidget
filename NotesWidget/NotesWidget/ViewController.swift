@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import WidgetKit
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
 
@@ -36,6 +37,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         
         ImageView.image = uploadedImage
         ImageView.contentMode = .scaleAspectFill
+        
+        WidgetCenter.shared.reloadTimelines(ofKind: "NotesWidgetTarget")
     }
     func loadStoredValue(){
         var storedImgData: Data!

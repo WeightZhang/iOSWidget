@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		238E046F24B0D9AB00B84255 /* Piper2.png in Resources */ = {isa = PBXBuildFile; fileRef = 238E046E24B0D9AB00B84255 /* Piper2.png */; };
 		23C92BAC24AF8DF3007A1A26 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C92BAB24AF8DF3007A1A26 /* AppDelegate.swift */; };
 		23C92BAE24AF8DF3007A1A26 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C92BAD24AF8DF3007A1A26 /* SceneDelegate.swift */; };
 		23C92BB024AF8DF3007A1A26 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C92BAF24AF8DF3007A1A26 /* ViewController.swift */; };
@@ -49,7 +48,6 @@
 
 /* Begin PBXFileReference section */
 		238E044F24B0C4C800B84255 /* NotesWidgetTargetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NotesWidgetTargetExtension.entitlements; sourceTree = "<group>"; };
-		238E046E24B0D9AB00B84255 /* Piper2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Piper2.png; sourceTree = "<group>"; };
 		23C92BA824AF8DF3007A1A26 /* NotesWidget.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NotesWidget.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		23C92BAB24AF8DF3007A1A26 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		23C92BAD24AF8DF3007A1A26 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -135,7 +133,6 @@
 		23C92BC924AF9DC4007A1A26 /* NotesWidgetTarget */ = {
 			isa = PBXGroup;
 			children = (
-				238E046E24B0D9AB00B84255 /* Piper2.png */,
 				23C92BCA24AF9DC4007A1A26 /* NotesWidgetTarget.swift */,
 				23C92BCC24AF9DC4007A1A26 /* NotesWidgetTarget.intentdefinition */,
 				23C92BCD24AF9DC4007A1A26 /* Assets.xcassets */,
@@ -227,7 +224,6 @@
 				23C92BB824AF8DF4007A1A26 /* LaunchScreen.storyboard in Resources */,
 				23C92BB524AF8DF4007A1A26 /* Assets.xcassets in Resources */,
 				23C92BB324AF8DF3007A1A26 /* Main.storyboard in Resources */,
-				238E046F24B0D9AB00B84255 /* Piper2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
