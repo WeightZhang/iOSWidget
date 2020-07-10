@@ -4,6 +4,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17105"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -24,15 +25,8 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="highlightedColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DefaultImage" translatesAutoresizingMaskIntoConstraints="NO" id="MwG-GD-Red">
-                                <rect key="frame" x="20" y="92" width="374" height="374"/>
-                                <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="MwG-GD-Red" secondAttribute="height" multiplier="374:374" id="zzg-fX-lv3"/>
-                                </constraints>
-                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hNI-Lq-x9x">
-                                <rect key="frame" x="20" y="474" width="374" height="36"/>
+                                <rect key="frame" x="20" y="514" width="374" height="36"/>
                                 <color key="backgroundColor" red="0.0" green="0.40000000000000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                 <state key="normal" title="Select Image">
@@ -42,24 +36,84 @@
                                     <action selector="SelectImageClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8MC-Z4-CUR"/>
                                 </connections>
                             </button>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="c6w-1Q-POO">
+                                <rect key="frame" x="64" y="91" width="287" height="32"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <segments>
+                                    <segment title="Small"/>
+                                    <segment title="Medium"/>
+                                    <segment title="Large"/>
+                                </segments>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="selectedSegmentTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <action selector="SliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="GQa-Qq-pfX"/>
+                                </connections>
+                            </segmentedControl>
+                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DefaultImage" translatesAutoresizingMaskIntoConstraints="NO" id="nqe-lP-ESS">
+                                <rect key="frame" x="27" y="233" width="360" height="169"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="nqe-lP-ESS" secondAttribute="height" multiplier="360:169" id="h3w-yf-rqA"/>
+                                </constraints>
+                            </imageView>
+                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DefaultImage" translatesAutoresizingMaskIntoConstraints="NO" id="hIo-Rh-2g2">
+                                <rect key="frame" x="19" y="137" width="376" height="360"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="hIo-Rh-2g2" secondAttribute="height" multiplier="47:45" id="Jya-nr-Jdr"/>
+                                </constraints>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DefaultImage" translatesAutoresizingMaskIntoConstraints="NO" id="MwG-GD-Red">
+                                <rect key="frame" x="123" y="233" width="169" height="169"/>
+                                <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="MwG-GD-Red" secondAttribute="height" multiplier="1:1" id="mFm-Xb-NGc"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qU5-jZ-z0v">
+                                <rect key="frame" x="21" y="567" width="374" height="36"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                <state key="normal" title="Delete Image">
+                                    <color key="titleColor" systemColor="systemRedColor"/>
+                                </state>
+                                <connections>
+                                    <action selector="DeleteImageClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="E7t-mm-zmE"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="MwG-GD-Red" firstAttribute="top" secondItem="Iai-6E-gsA" secondAttribute="bottom" constant="8" symbolic="YES" id="1xW-yr-dl8"/>
+                            <constraint firstItem="hIo-Rh-2g2" firstAttribute="top" secondItem="c6w-1Q-POO" secondAttribute="bottom" constant="15" id="19o-sL-BDE"/>
+                            <constraint firstItem="c6w-1Q-POO" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="64" id="2LX-Db-egc"/>
+                            <constraint firstItem="qU5-jZ-z0v" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="21" id="4XG-Wh-vqd"/>
+                            <constraint firstItem="hIo-Rh-2g2" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="19" id="AeY-gV-L8T"/>
                             <constraint firstItem="Iai-6E-gsA" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="Bzs-sF-CpI"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Iai-6E-gsA" secondAttribute="trailing" constant="20" id="KZL-2N-AU3"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="hIo-Rh-2g2" secondAttribute="trailing" constant="19" id="Nxw-PL-Ywj"/>
                             <constraint firstItem="Iai-6E-gsA" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Qbh-K6-B1Q"/>
-                            <constraint firstItem="MwG-GD-Red" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="YNq-VV-MaG"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="MwG-GD-Red" secondAttribute="trailing" constant="20" id="etw-9P-B71"/>
-                            <constraint firstItem="hNI-Lq-x9x" firstAttribute="top" secondItem="MwG-GD-Red" secondAttribute="bottom" constant="8" symbolic="YES" id="uIM-lI-byX"/>
+                            <constraint firstItem="hNI-Lq-x9x" firstAttribute="top" secondItem="hIo-Rh-2g2" secondAttribute="bottom" constant="17" id="S5M-u1-IOu"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="c6w-1Q-POO" secondAttribute="trailing" constant="63" id="TnO-re-qfc"/>
+                            <constraint firstItem="nqe-lP-ESS" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="27" id="VwN-fu-Opn"/>
+                            <constraint firstItem="MwG-GD-Red" firstAttribute="top" secondItem="c6w-1Q-POO" secondAttribute="bottom" constant="111" id="Wy3-cP-r5j"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="qU5-jZ-z0v" secondAttribute="trailing" constant="19" id="bxZ-mv-ljZ"/>
+                            <constraint firstItem="MwG-GD-Red" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="123" id="dhX-8a-0YM"/>
+                            <constraint firstItem="c6w-1Q-POO" firstAttribute="top" secondItem="Iai-6E-gsA" secondAttribute="bottom" constant="7" id="enO-G3-q3G"/>
+                            <constraint firstItem="qU5-jZ-z0v" firstAttribute="top" secondItem="hNI-Lq-x9x" secondAttribute="bottom" constant="17" id="gfQ-Gv-ETm"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="MwG-GD-Red" secondAttribute="trailing" constant="122" id="rAa-BE-ZVo"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="hNI-Lq-x9x" secondAttribute="trailing" constant="20" id="uTE-om-0aA"/>
                             <constraint firstItem="hNI-Lq-x9x" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="vto-dQ-SsV"/>
+                            <constraint firstItem="nqe-lP-ESS" firstAttribute="top" secondItem="c6w-1Q-POO" secondAttribute="bottom" constant="111" id="wIv-h5-L3T"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="nqe-lP-ESS" secondAttribute="trailing" constant="27" id="ynn-vX-PxG"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="DeleteImageButton" destination="qU5-jZ-z0v" id="kNP-jj-fAf"/>
+                        <outlet property="ImageVIewLarge" destination="hIo-Rh-2g2" id="x22-2q-cHR"/>
                         <outlet property="ImageView" destination="MwG-GD-Red" id="5E8-P1-jc7"/>
+                        <outlet property="ImageViewMedium" destination="nqe-lP-ESS" id="WWt-6W-ect"/>
                         <outlet property="SelectImageButton" destination="hNI-Lq-x9x" id="8YQ-kF-0XM"/>
+                        <outlet property="SizeSlider" destination="c6w-1Q-POO" id="jrF-ZK-QNr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -69,5 +123,8 @@
     </scenes>
     <resources>
         <image name="DefaultImage" width="1000" height="1000"/>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>

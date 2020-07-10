@@ -72,7 +72,7 @@ struct NotesWidgetTargetEntryView : View {
         VStack{
             Image(uiImage: UIImage.init(data: data.storedImgData)!)
                 .resizable()
-                .aspectRatio(contentMode: .fit)
+                .aspectRatio(contentMode: .fill)
 
         }.background(Color.black)
     }
@@ -92,6 +92,6 @@ struct NotesWidgetTarget: Widget {
         }
         .configurationDisplayName("Picture Box")
         .description("View a picture on your home screen.")
-        .supportedFamilies([.systemSmall])
+        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
     }
 }
