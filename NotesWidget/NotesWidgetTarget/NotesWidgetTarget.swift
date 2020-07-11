@@ -63,6 +63,20 @@ func getData() -> DataStruct {
     return data
 }
 
+struct TextOverlay: View {
+    var body: some View {
+        ZStack {
+            Text("TESTING")
+                .font(.callout)
+                .padding(6)
+                .foregroundColor(.white)
+        }.background(Color.black)
+        .opacity(0.8)
+        .cornerRadius(10.0)
+        .padding(6)
+    }
+}
+
 struct NotesWidgetTargetEntryView : View {
     var entry: Provider.Entry
     
@@ -75,6 +89,7 @@ struct NotesWidgetTargetEntryView : View {
                 .aspectRatio(contentMode: .fill)
 
         }.background(Color.black)
+        .overlay(TextOverlay(), alignment: .bottomTrailing)
     }
 }
 

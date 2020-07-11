@@ -17,6 +17,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
     @IBOutlet weak var ImageVIewLarge: UIImageView!
     @IBOutlet weak var DeleteImageButton: UIButton!
     @IBOutlet weak var TextOverlayTextbox: UITextField!
+    @IBOutlet weak var TextOverlayLabelSmall: UILabel!
+    @IBOutlet weak var TextOverlayLabelMedium: UILabel!
+    @IBOutlet weak var TextOverlayLabelLarge: UILabel!
+    @IBOutlet weak var DeleteTextButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +30,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         currentImgView = ImageView
         
         loadStoredValue()
+        loadTextValue()
     }
     
     var uploadedImage: UIImage!
@@ -44,18 +49,27 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
             ImageView.isHidden = false
             ImageViewMedium.isHidden = true
             ImageVIewLarge.isHidden = true
+            TextOverlayLabelSmall.isHidden = false
+            TextOverlayLabelMedium.isHidden = true
+            TextOverlayLabelLarge.isHidden = true
             break
         case 1:
             currentImgView = ImageViewMedium
             ImageView.isHidden = true
             ImageViewMedium.isHidden = false
             ImageVIewLarge.isHidden = true
+            TextOverlayLabelSmall.isHidden = true
+            TextOverlayLabelMedium.isHidden = false
+            TextOverlayLabelLarge.isHidden = true
             break
         case 2:
             currentImgView = ImageVIewLarge
             ImageView.isHidden = true
             ImageViewMedium.isHidden = true
             ImageVIewLarge.isHidden = false
+            TextOverlayLabelSmall.isHidden = true
+            TextOverlayLabelMedium.isHidden = true
+            TextOverlayLabelLarge.isHidden = false
             break
         default:
             break
@@ -67,7 +81,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
     }
     @IBAction func TextChanged(_ sender: Any) {
         updateTextValue()
-        loadTextValue()
+    }
+    @IBAction func TextboxEditing(_ sender: Any) {
+        updateTextValue()
+    }
+    @IBAction func DeleteTextButton(_ sender: Any) {
+        TextOverlayTextbox.text = ""
+        updateTextValue()
     }
     
     func updateStoredValue(){
@@ -87,8 +107,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
             userDefaults.set(TextOverlayTextbox.text, forKey: "TEXT_DATA")
         }
         
-        currentImgView.image = uploadedImage
-        currentImgView.contentMode = .scaleAspectFill
+        TextOverlayLabelSmall.text = TextOverlayTextbox.text
+        TextOverlayLabelMedium.text = TextOverlayTextbox.text
+        TextOverlayLabelLarge.text = TextOverlayTextbox.text
         
         WidgetCenter.shared.reloadTimelines(ofKind: "NotesWidgetTarget")
     }
@@ -117,9 +138,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
     func loadTextValue(){
         var storedTxtData: String = ""
         if let userDefaults = UserDefaults(suiteName: "group.com.putterfitter.NotesWidget") {
-            storedTxtData = userDefaults.string(forKey: "TEXT_DATA")!
+            storedTxtData = userDefaults.string(forKey: "TEXT_DATA") ?? ""
         }
         //add overlay to selected image
+        TextOverlayLabelSmall.text = storedTxtData
+        TextOverlayLabelMedium.text = storedTxtData
+        TextOverlayLabelLarge.text = storedTxtData
+        
+        TextOverlayTextbox.text = storedTxtData
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
