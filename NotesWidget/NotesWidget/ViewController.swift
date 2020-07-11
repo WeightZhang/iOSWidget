@@ -16,10 +16,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
     @IBOutlet weak var ImageViewMedium: UIImageView!
     @IBOutlet weak var ImageVIewLarge: UIImageView!
     @IBOutlet weak var DeleteImageButton: UIButton!
+    @IBOutlet weak var TextOverlayTextbox: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        addDoneButtonOnKeyboard()
+        
         currentImgView = ImageView
         
         loadStoredValue()
@@ -62,12 +65,26 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
     @IBAction func DeleteImageClicked(_ sender: Any) {
         removeStoredValue()
     }
+    @IBAction func TextChanged(_ sender: Any) {
+        updateTextValue()
+        loadTextValue()
+    }
     
     func updateStoredValue(){
         if let imgData = uploadedImage?.pngData(){
             if let userDefaults = UserDefaults(suiteName: "group.com.putterfitter.NotesWidget"){
                 userDefaults.set(imgData as Data, forKey: "IMG_DATA")
             }
+        }
+        
+        currentImgView.image = uploadedImage
+        currentImgView.contentMode = .scaleAspectFill
+        
+        WidgetCenter.shared.reloadTimelines(ofKind: "NotesWidgetTarget")
+    }
+    func updateTextValue(){
+        if let userDefaults = UserDefaults(suiteName: "group.com.putterfitter.NotesWidget"){
+            userDefaults.set(TextOverlayTextbox.text, forKey: "TEXT_DATA")
         }
         
         currentImgView.image = uploadedImage
@@ -97,6 +114,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
             currentImgView.contentMode = .scaleAspectFill
         }
     }
+    func loadTextValue(){
+        var storedTxtData: String = ""
+        if let userDefaults = UserDefaults(suiteName: "group.com.putterfitter.NotesWidget") {
+            storedTxtData = userDefaults.string(forKey: "TEXT_DATA")!
+        }
+        //add overlay to selected image
+    }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[.editedImage] as? UIImage else { return }
@@ -106,6 +130,24 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         uploadedImage = image
         updateStoredValue()
     }
+    
+    func addDoneButtonOnKeyboard(){
+            let doneToolbar: UIToolbar = UIToolbar(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50))
+            doneToolbar.barStyle = .default
+
+            let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+            let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(self.doneButtonAction))
+
+            let items = [flexSpace, done]
+            doneToolbar.items = items
+            doneToolbar.sizeToFit()
+
+            TextOverlayTextbox.inputAccessoryView = doneToolbar
+        }
+
+        @objc func doneButtonAction(){
+            TextOverlayTextbox.resignFirstResponder()
+        }
 
 }
 

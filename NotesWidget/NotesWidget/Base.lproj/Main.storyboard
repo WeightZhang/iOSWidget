@@ -80,6 +80,18 @@
                                     <action selector="DeleteImageClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="E7t-mm-zmE"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Overlay Message (Optional)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ujk-rO-ZdH">
+                                <rect key="frame" x="27" y="611" width="360" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert"/>
+                                <connections>
+                                    <action selector="TextChanged:" destination="BYZ-38-t0r" eventType="editingDidEnd" id="1nF-Hy-kNg"/>
+                                </connections>
+                            </textField>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -114,6 +126,7 @@
                         <outlet property="ImageViewMedium" destination="nqe-lP-ESS" id="WWt-6W-ect"/>
                         <outlet property="SelectImageButton" destination="hNI-Lq-x9x" id="8YQ-kF-0XM"/>
                         <outlet property="SizeSlider" destination="c6w-1Q-POO" id="jrF-ZK-QNr"/>
+                        <outlet property="TextOverlayTextbox" destination="ujk-rO-ZdH" id="fBD-wn-eP8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
