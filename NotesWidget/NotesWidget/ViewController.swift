@@ -34,6 +34,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         loadTextValue()
         loadPositionValue()
     }
+    override func viewDidDisappear(_ animated: Bool) {
+        WidgetCenter.shared.reloadTimelines(ofKind: "NotesWidgetTarget")
+    }
     
     var uploadedImage: UIImage!
     var currentImgView: UIImageView!
