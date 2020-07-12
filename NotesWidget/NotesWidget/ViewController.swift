@@ -18,21 +18,45 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
     @IBOutlet weak var DeleteImageButton: UIButton!
     @IBOutlet weak var TextOverlayTextbox: UITextField!
     @IBOutlet weak var TextOverlayLabelSmall: UILabel!
+    @IBOutlet weak var TextOverlayLabelSmall1: UILabel!
+    @IBOutlet weak var TextOverlayLabelSmall2: UILabel!
+    @IBOutlet weak var TextOverlayLabelSmall3: UILabel!
     @IBOutlet weak var TextOverlayLabelMedium: UILabel!
+    @IBOutlet weak var TextOverlayLabelMedium1: UILabel!
+    @IBOutlet weak var TextOverlayLabelMedium2: UILabel!
+    @IBOutlet weak var TextOverlayLabelMedium3: UILabel!
     @IBOutlet weak var TextOverlayLabelLarge: UILabel!
+    @IBOutlet weak var TextOverlayLabelLarge1: UILabel!
+    @IBOutlet weak var TextOverlayLabelLarge2: UILabel!
+    @IBOutlet weak var TextOverlayLabelLarge3: UILabel!
     @IBOutlet weak var DeleteTextButton: UIButton!
     @IBOutlet weak var PositionSlider: UISegmentedControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        smallLabels.append(TextOverlayLabelSmall)
+        smallLabels.append(TextOverlayLabelSmall1)
+        smallLabels.append(TextOverlayLabelSmall2)
+        smallLabels.append(TextOverlayLabelSmall3)
+        
+        mediumLabels.append(TextOverlayLabelMedium)
+        mediumLabels.append(TextOverlayLabelMedium1)
+        mediumLabels.append(TextOverlayLabelMedium2)
+        mediumLabels.append(TextOverlayLabelMedium3)
+
+        largeLabels.append(TextOverlayLabelLarge)
+        largeLabels.append(TextOverlayLabelLarge1)
+        largeLabels.append(TextOverlayLabelLarge2)
+        largeLabels.append(TextOverlayLabelLarge3)
+
         addDoneButtonOnKeyboard()
         
         currentImgView = ImageView
         
         loadStoredValue()
-        loadTextValue()
         loadPositionValue()
+        loadTextValue()
     }
     override func viewDidDisappear(_ animated: Bool) {
         WidgetCenter.shared.reloadTimelines(ofKind: "NotesWidgetTarget")
@@ -47,6 +71,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         case upper_right = "UR"
     }
     var currentPosition: ePosition!
+    var smallLabels: [UILabel] = []
+    var mediumLabels: [UILabel] = []
+    var largeLabels: [UILabel] = []
     
     @IBAction func SelectImageClicked(_ sender: Any) {
         let picker = UIImagePickerController()
@@ -61,27 +88,27 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
             ImageView.isHidden = false
             ImageViewMedium.isHidden = true
             ImageVIewLarge.isHidden = true
-            TextOverlayLabelSmall.isHidden = false
-            TextOverlayLabelMedium.isHidden = true
-            TextOverlayLabelLarge.isHidden = true
+            smallLabels.forEach{label in label.isHidden = false}
+            mediumLabels.forEach{label in label.isHidden = true}
+            largeLabels.forEach{label in label.isHidden = true}
             break
         case 1:
             currentImgView = ImageViewMedium
             ImageView.isHidden = true
             ImageViewMedium.isHidden = false
             ImageVIewLarge.isHidden = true
-            TextOverlayLabelSmall.isHidden = true
-            TextOverlayLabelMedium.isHidden = false
-            TextOverlayLabelLarge.isHidden = true
+            smallLabels.forEach{label in label.isHidden = true}
+            mediumLabels.forEach{label in label.isHidden = false}
+            largeLabels.forEach{label in label.isHidden = true}
             break
         case 2:
             currentImgView = ImageVIewLarge
             ImageView.isHidden = true
             ImageViewMedium.isHidden = true
             ImageVIewLarge.isHidden = false
-            TextOverlayLabelSmall.isHidden = true
-            TextOverlayLabelMedium.isHidden = true
-            TextOverlayLabelLarge.isHidden = false
+            smallLabels.forEach{label in label.isHidden = true}
+            mediumLabels.forEach{label in label.isHidden = true}
+            largeLabels.forEach{label in label.isHidden = false}
             break
         default:
             break
@@ -138,9 +165,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
             userDefaults.set(TextOverlayTextbox.text, forKey: "TEXT_DATA")
         }
         
-        TextOverlayLabelSmall.text = TextOverlayTextbox.text
-        TextOverlayLabelMedium.text = TextOverlayTextbox.text
-        TextOverlayLabelLarge.text = TextOverlayTextbox.text
+        loadTextValue()
         
         WidgetCenter.shared.reloadTimelines(ofKind: "NotesWidgetTarget")
     }
@@ -148,6 +173,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         if let userDefaults = UserDefaults(suiteName: "group.com.putterfitter.NotesWidget"){
             userDefaults.set(currentPosition.rawValue, forKey: "POS_DATA")
         }
+        
+        loadTextValue()
         
         WidgetCenter.shared.reloadTimelines(ofKind: "NotesWidgetTarget")
     }
@@ -179,9 +206,33 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
             storedTxtData = userDefaults.string(forKey: "TEXT_DATA") ?? ""
         }
         //add overlay to selected image
-        TextOverlayLabelSmall.text = storedTxtData
-        TextOverlayLabelMedium.text = storedTxtData
-        TextOverlayLabelLarge.text = storedTxtData
+        smallLabels.forEach{label in label.text = ""}
+        mediumLabels.forEach{label in label.text = ""}
+        largeLabels.forEach{label in label.text = ""}
+        switch currentPosition {
+        case .lower_left:
+            smallLabels[1].text = storedTxtData
+            mediumLabels[1].text = storedTxtData
+            largeLabels[1].text = storedTxtData
+            break
+        case .lower_right:
+            smallLabels[0].text = storedTxtData
+            mediumLabels[0].text = storedTxtData
+            largeLabels[0].text = storedTxtData
+            break
+        case .upper_left:
+            smallLabels[2].text = storedTxtData
+            mediumLabels[2].text = storedTxtData
+            largeLabels[2].text = storedTxtData
+            break
+        case .upper_right:
+            smallLabels[3].text = storedTxtData
+            mediumLabels[3].text = storedTxtData
+            largeLabels[3].text = storedTxtData
+            break
+        default:
+            break
+        }
         
         TextOverlayTextbox.text = storedTxtData
     }
