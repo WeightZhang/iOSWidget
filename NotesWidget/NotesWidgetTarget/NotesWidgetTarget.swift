@@ -45,8 +45,17 @@ struct PlaceholderView : View {
     }
 }
 
+enum ePosition: String{
+    case lower_left = "LL"
+    case lower_right = "LR"
+    case upper_left = "UL"
+    case upper_right = "UR"
+}
+
 struct DataStruct {
     var storedImgData: Data!
+    var storedTxtData: String!
+    var storedPosData: ePosition!
 }
 
 func getData() -> DataStruct {
@@ -54,19 +63,42 @@ func getData() -> DataStruct {
     
     if let userDefaults = UserDefaults(suiteName: "group.com.putterfitter.NotesWidget") {
         data.storedImgData = userDefaults.data(forKey: "IMG_DATA")
+        data.storedTxtData = userDefaults.string(forKey: "TEXT_DATA")
+        data.storedPosData = ePosition(rawValue: userDefaults.string(forKey: "POS_DATA") ?? "LR")
     }
     
     if(data.storedImgData == nil){
         data.storedImgData = UIImage(named: "DefaultImage")?.pngData()
     }
+    if(data.storedTxtData == nil){
+        data.storedTxtData = ""
+    }
+    if(data.storedPosData == nil){
+        data.storedPosData = .lower_right
+    }
     
     return data
 }
+func getPosition(pos: ePosition) -> Alignment{
+    switch pos {
+    case .lower_left:
+        return Alignment.bottomLeading
+    case .lower_right:
+        return Alignment.bottomTrailing
+    case .upper_left:
+        return Alignment.topLeading
+    case .upper_right:
+        return Alignment.topTrailing
+    default:
+        return Alignment.bottomTrailing
+    }
+}
 
 struct TextOverlay: View {
+    var data = getData()
     var body: some View {
         ZStack {
-            Text("TESTING")
+            Text(data.storedTxtData)
                 .font(.callout)
                 .padding(6)
                 .foregroundColor(.white)
@@ -81,7 +113,7 @@ struct NotesWidgetTargetEntryView : View {
     var entry: Provider.Entry
     
     var data = getData()
-        
+    
     var body: some View {
         VStack{
             Image(uiImage: UIImage.init(data: data.storedImgData)!)
@@ -89,7 +121,7 @@ struct NotesWidgetTargetEntryView : View {
                 .aspectRatio(contentMode: .fill)
 
         }.background(Color.black)
-        .overlay(TextOverlay(), alignment: .bottomTrailing)
+        .overlay(data.storedTxtData != "" ? TextOverlay() : nil, alignment: getPosition(pos: data.storedPosData))
     }
 }
 

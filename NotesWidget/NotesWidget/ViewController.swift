@@ -21,6 +21,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
     @IBOutlet weak var TextOverlayLabelMedium: UILabel!
     @IBOutlet weak var TextOverlayLabelLarge: UILabel!
     @IBOutlet weak var DeleteTextButton: UIButton!
+    @IBOutlet weak var PositionSlider: UISegmentedControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,10 +32,18 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         
         loadStoredValue()
         loadTextValue()
+        loadPositionValue()
     }
     
     var uploadedImage: UIImage!
     var currentImgView: UIImageView!
+    enum ePosition: String{
+        case lower_left = "LL"
+        case lower_right = "LR"
+        case upper_left = "UL"
+        case upper_right = "UR"
+    }
+    var currentPosition: ePosition!
     
     @IBAction func SelectImageClicked(_ sender: Any) {
         let picker = UIImagePickerController()
@@ -89,6 +98,25 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         TextOverlayTextbox.text = ""
         updateTextValue()
     }
+    @IBAction func PositionSliderChanged(_ sender: Any) {
+        switch PositionSlider.selectedSegmentIndex {
+        case 0:
+            currentPosition = .lower_left
+            break
+        case 1:
+            currentPosition = .lower_right
+            break
+        case 2:
+            currentPosition = .upper_left
+            break
+        case 3:
+            currentPosition = .upper_right
+            break
+        default:
+            break
+        }
+        updatePositionValue()
+    }
     
     func updateStoredValue(){
         if let imgData = uploadedImage?.pngData(){
@@ -110,6 +138,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         TextOverlayLabelSmall.text = TextOverlayTextbox.text
         TextOverlayLabelMedium.text = TextOverlayTextbox.text
         TextOverlayLabelLarge.text = TextOverlayTextbox.text
+        
+        WidgetCenter.shared.reloadTimelines(ofKind: "NotesWidgetTarget")
+    }
+    func updatePositionValue(){
+        if let userDefaults = UserDefaults(suiteName: "group.com.putterfitter.NotesWidget"){
+            userDefaults.set(currentPosition.rawValue, forKey: "POS_DATA")
+        }
         
         WidgetCenter.shared.reloadTimelines(ofKind: "NotesWidgetTarget")
     }
@@ -147,6 +182,32 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         
         TextOverlayTextbox.text = storedTxtData
     }
+    func loadPositionValue(){
+        var storedPosData: ePosition!
+        if let userDefaults = UserDefaults(suiteName: "group.com.putterfitter.NotesWidget") {
+            storedPosData = ePosition(rawValue: userDefaults.string(forKey: "POS_DATA") ?? "LR")
+        }
+
+        currentPosition = storedPosData
+        
+        switch currentPosition {
+        case .lower_left:
+            PositionSlider.selectedSegmentIndex = 0
+            break
+        case .lower_right:
+            PositionSlider.selectedSegmentIndex = 1
+            break
+        case .upper_left:
+            PositionSlider.selectedSegmentIndex = 2
+            break
+        case .upper_right:
+            PositionSlider.selectedSegmentIndex = 3
+            break
+        default:
+            break
+        }
+        
+    }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[.editedImage] as? UIImage else { return }
@@ -163,7 +224,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 
             let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
             let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(self.doneButtonAction))
-
+        
             let items = [flexSpace, done]
             doneToolbar.items = items
             doneToolbar.sizeToFit()
