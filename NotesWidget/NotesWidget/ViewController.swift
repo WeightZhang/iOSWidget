@@ -123,6 +123,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
     }
     @IBAction func TextboxEditing(_ sender: Any) {
         updateTextValue()
+        // TODO:
+        //Prevent overflow by looking at the frame values of the label, thrid column.
     }
     @IBAction func DeleteTextButton(_ sender: Any) {
         TextOverlayTextbox.text = ""
