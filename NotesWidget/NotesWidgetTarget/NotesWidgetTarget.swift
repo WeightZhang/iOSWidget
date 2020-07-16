@@ -11,18 +11,19 @@ import Intents
 
 struct Provider: IntentTimelineProvider {
     public func snapshot(for configuration: ConfigurationIntent, with context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), configuration: configuration)
+        
+        let entry = SimpleEntry(date: Date(), configuration: configuration, alignment: getPosition())
         completion(entry)
     }
 
     public func timeline(for configuration: ConfigurationIntent, with context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         var entries: [SimpleEntry] = []
 
-        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
+        // Generate a timeline consisting of four entries an hour apart, starting from the current date.
         let currentDate = Date()
-        for hourOffset in 0 ..< 5 {
+        for hourOffset in 0 ..< 4 {
             let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, configuration: configuration)
+            let entry = SimpleEntry(date: entryDate, configuration: configuration, alignment: getPosition())
             entries.append(entry)
         }
 
@@ -34,6 +35,7 @@ struct Provider: IntentTimelineProvider {
 struct SimpleEntry: TimelineEntry {
     public let date: Date
     public let configuration: ConfigurationIntent
+    public let alignment: Alignment
 }
 
 struct PlaceholderView : View {
@@ -41,7 +43,7 @@ struct PlaceholderView : View {
         //Staticlly set image
          Image("DefaultImage")
              .resizable()
-             .aspectRatio(contentMode: .fit)
+            .aspectRatio(contentMode: .fill)
     }
 }
 
@@ -50,6 +52,7 @@ enum ePosition: String{
     case lower_right = "LR"
     case upper_left = "UL"
     case upper_right = "UR"
+    case random_pos = "RP"
 }
 
 struct DataStruct {
@@ -93,6 +96,29 @@ func getPosition(pos: ePosition) -> Alignment{
         return Alignment.bottomTrailing
     }
 }
+func getPosition() -> Alignment{
+    var storedPosData: ePosition = .lower_left
+    if let userDefaults = UserDefaults(suiteName: "group.com.putterfitter.NotesWidget") {
+        storedPosData = ePosition(rawValue: userDefaults.string(forKey: "POS_DATA") ?? "LR")!
+    }
+    
+    let AlignmentArray: [Alignment] = [Alignment.bottomLeading, Alignment.bottomTrailing, Alignment.topLeading, Alignment.topTrailing]
+    
+    switch storedPosData {
+    case .lower_left:
+        return AlignmentArray[0]
+    case .lower_right:
+        return AlignmentArray[1]
+    case .upper_left:
+        return AlignmentArray[2]
+    case .upper_right:
+        return AlignmentArray[3]
+    case .random_pos:
+        return AlignmentArray[Int.random(in: 0...3)]
+    default:
+        return AlignmentArray[1]
+    }
+}
 
 struct TextOverlay: View {
     var data = getData()
@@ -113,15 +139,45 @@ struct NotesWidgetTargetEntryView : View {
     var entry: Provider.Entry
     
     var data = getData()
+    @Environment(\.widgetFamily) var family
     
+    @ViewBuilder
     var body: some View {
-        VStack{
-            Image(uiImage: UIImage.init(data: data.storedImgData)!)
-                .resizable()
-                .aspectRatio(contentMode: .fill)
+        switch family {
+        case .systemSmall:
+            VStack{
+                Image(uiImage: UIImage.init(data: data.storedImgData)!)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
 
-        }.background(Color.black)
-        .overlay(data.storedTxtData != "" ? TextOverlay() : nil, alignment: getPosition(pos: data.storedPosData))
+            }.background(Color.black)
+            .overlay(data.storedTxtData != "" ? TextOverlay() : nil, alignment: entry.alignment)
+        case .systemMedium:
+            VStack{
+                Image(uiImage: UIImage.init(data: data.storedImgData)!)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+
+            }.background(Color.black)
+            .overlay(data.storedTxtData != "" ? TextOverlay() : nil, alignment: entry.alignment)
+        case .systemLarge:
+            VStack{
+                Image(uiImage: UIImage.init(data: data.storedImgData)!)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+
+            }.background(Color.black)
+            .overlay(data.storedTxtData != "" ? TextOverlay().padding() : nil, alignment: entry.alignment)
+        default:
+            VStack{
+                Image(uiImage: UIImage.init(data: data.storedImgData)!)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+
+            }.background(Color.black)
+            .overlay(data.storedTxtData != "" ? TextOverlay() : nil, alignment: entry.alignment)
+        }
+        
     }
 }
 

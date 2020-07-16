@@ -69,6 +69,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         case lower_right = "LR"
         case upper_left = "UL"
         case upper_right = "UR"
+        case random_pos = "RP"
     }
     var currentPosition: ePosition!
     var smallLabels: [UILabel] = []
@@ -144,7 +145,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         case 3:
             currentPosition = .upper_right
             break
+        case 4:
+            currentPosition = .random_pos
+            break
         default:
+            currentPosition = .lower_right
             break
         }
         updatePositionValue()
@@ -233,6 +238,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
             largeLabels[3].text = storedTxtData
             break
         default:
+            smallLabels[0].text = storedTxtData
+            mediumLabels[0].text = storedTxtData
+            largeLabels[0].text = storedTxtData
             break
         }
         
@@ -258,6 +266,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
             break
         case .upper_right:
             PositionSlider.selectedSegmentIndex = 3
+            break
+        case .random_pos:
+            PositionSlider.selectedSegmentIndex = 4
             break
         default:
             break

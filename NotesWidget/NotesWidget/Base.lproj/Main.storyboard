@@ -200,7 +200,7 @@
                                                 </connections>
                                             </button>
                                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="GXA-fl-6qx">
-                                                <rect key="frame" x="65" y="619" width="287" height="32"/>
+                                                <rect key="frame" x="21" y="619" width="374" height="32"/>
                                                 <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="31" id="PeN-lr-9ZK"/>
@@ -210,6 +210,7 @@
                                                     <segment title="" image="rectangle.inset.bottomright.fill" catalog="system"/>
                                                     <segment title="" image="rectangle.inset.topleft.fill" catalog="system"/>
                                                     <segment title="" image="rectangle.inset.topright.fill" catalog="system"/>
+                                                    <segment title="" image="rectangle.split.2x2.fill" catalog="system"/>
                                                 </segments>
                                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <color key="selectedSegmentTintColor" red="0.0" green="0.40000000000000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -220,7 +221,6 @@
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstItem="GXA-fl-6qx" firstAttribute="leading" secondItem="3Ps-JL-HjC" secondAttribute="leading" constant="65" id="0E4-q4-uww"/>
                                             <constraint firstItem="nRO-de-JvP" firstAttribute="top" secondItem="3Ps-JL-HjC" secondAttribute="top" constant="247" id="0Fg-Fj-zCk"/>
                                             <constraint firstItem="VMb-Tl-UnN" firstAttribute="leading" secondItem="3Ps-JL-HjC" secondAttribute="leading" constant="21" id="1fq-4b-UQj"/>
                                             <constraint firstItem="VMb-Tl-UnN" firstAttribute="top" secondItem="3Ps-JL-HjC" secondAttribute="top" constant="715" id="26M-wA-JK7"/>
@@ -261,7 +261,9 @@
                                             <constraint firstItem="qU5-jZ-z0v" firstAttribute="leading" secondItem="3Ps-JL-HjC" secondAttribute="leading" constant="21" id="hDd-gn-oeS"/>
                                             <constraint firstItem="Iai-6E-gsA" firstAttribute="leading" secondItem="3Ps-JL-HjC" secondAttribute="leading" constant="8" id="jTW-31-gH1"/>
                                             <constraint firstItem="c6w-1Q-POO" firstAttribute="top" secondItem="3Ps-JL-HjC" secondAttribute="top" constant="99" id="jvp-Dj-btM"/>
+                                            <constraint firstItem="GXA-fl-6qx" firstAttribute="leading" secondItem="3Ps-JL-HjC" secondAttribute="leading" constant="21" id="kpb-h8-agv"/>
                                             <constraint firstAttribute="trailing" secondItem="ujk-rO-ZdH" secondAttribute="trailing" constant="19" id="krC-gn-OYt"/>
+                                            <constraint firstAttribute="trailing" secondItem="GXA-fl-6qx" secondAttribute="trailing" constant="18" id="lBv-5O-XGm"/>
                                             <constraint firstItem="hNI-Lq-x9x" firstAttribute="top" secondItem="3Ps-JL-HjC" secondAttribute="top" constant="522" id="lp8-CA-VAV"/>
                                             <constraint firstAttribute="trailing" secondItem="VMb-Tl-UnN" secondAttribute="trailing" constant="18" id="osG-Lb-ULF"/>
                                             <constraint firstItem="MwG-GD-Red" firstAttribute="leading" secondItem="3Ps-JL-HjC" secondAttribute="leading" constant="123" id="pMs-Uo-Jfj"/>
@@ -271,7 +273,6 @@
                                             <constraint firstItem="ujk-rO-ZdH" firstAttribute="leading" secondItem="3Ps-JL-HjC" secondAttribute="leading" constant="20" id="sSY-5v-AEn"/>
                                             <constraint firstAttribute="trailing" secondItem="nRO-de-JvP" secondAttribute="trailing" constant="125" id="tYb-QE-Xbb"/>
                                             <constraint firstAttribute="trailing" secondItem="wOQ-bG-azG" secondAttribute="trailing" constant="32" id="vlS-JX-qOC"/>
-                                            <constraint firstAttribute="trailing" secondItem="GXA-fl-6qx" secondAttribute="trailing" constant="61" id="w4P-wu-fDi"/>
                                             <constraint firstItem="hIo-Rh-2g2" firstAttribute="leading" secondItem="3Ps-JL-HjC" secondAttribute="leading" constant="19" id="xeZ-Nf-QbR"/>
                                             <constraint firstItem="ujk-rO-ZdH" firstAttribute="top" secondItem="3Ps-JL-HjC" secondAttribute="top" constant="572" id="xz4-uj-Sb3"/>
                                             <constraint firstItem="wOQ-bG-azG" firstAttribute="top" secondItem="3Ps-JL-HjC" secondAttribute="top" constant="151" id="yn2-E9-gV3"/>
@@ -335,6 +336,7 @@
         <image name="rectangle.inset.bottomright.fill" catalog="system" width="128" height="93"/>
         <image name="rectangle.inset.topleft.fill" catalog="system" width="128" height="93"/>
         <image name="rectangle.inset.topright.fill" catalog="system" width="128" height="93"/>
+        <image name="rectangle.split.2x2.fill" catalog="system" width="128" height="93"/>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
