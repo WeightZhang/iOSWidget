@@ -19,10 +19,10 @@ struct Provider: IntentTimelineProvider {
     public func timeline(for configuration: ConfigurationIntent, with context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         var entries: [SimpleEntry] = []
 
-        // Generate a timeline consisting of four entries an hour apart, starting from the current date.
+        // Generate a timeline consisting of six entries 10min apart, starting from the current date.
         let currentDate = Date()
-        for hourOffset in 0 ..< 4 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
+        for hourOffset in 0 ..< 6 {
+            let entryDate = Calendar.current.date(byAdding: .minute, value: hourOffset*10, to: currentDate)!
             let entry = SimpleEntry(date: entryDate, configuration: configuration, alignment: getPosition())
             entries.append(entry)
         }
@@ -159,7 +159,8 @@ struct NotesWidgetTargetEntryView : View {
                     .aspectRatio(contentMode: .fill)
 
             }.background(Color.black)
-            .overlay(data.storedTxtData != "" ? TextOverlay() : nil, alignment: entry.alignment)
+            //.overlay(data.storedTxtData != "" ? TextOverlay() : nil, alignment: entry.alignment)
+            .overlay(data.storedTxtData != "" ? TextOverlay().padding(Edge.Set.top, CGFloat(100)) : nil, alignment: Alignment.center)
         case .systemLarge:
             VStack{
                 Image(uiImage: UIImage.init(data: data.storedImgData)!)

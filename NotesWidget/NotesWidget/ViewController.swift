@@ -21,6 +21,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
     @IBOutlet weak var TextOverlayLabelSmall1: UILabel!
     @IBOutlet weak var TextOverlayLabelSmall2: UILabel!
     @IBOutlet weak var TextOverlayLabelSmall3: UILabel!
+    @IBOutlet weak var TextOverlayCenter: UILabel!
     @IBOutlet weak var TextOverlayLabelMedium: UILabel!
     @IBOutlet weak var TextOverlayLabelMedium1: UILabel!
     @IBOutlet weak var TextOverlayLabelMedium2: UILabel!
@@ -31,6 +32,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
     @IBOutlet weak var TextOverlayLabelLarge3: UILabel!
     @IBOutlet weak var DeleteTextButton: UIButton!
     @IBOutlet weak var PositionSlider: UISegmentedControl!
+    @IBOutlet weak var CenterPositionLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,11 +46,12 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         smallLabels.append(TextOverlayLabelSmall2)
         smallLabels.append(TextOverlayLabelSmall3)
         
-        mediumLabels.append(TextOverlayLabelMedium)
-        mediumLabels.append(TextOverlayLabelMedium1)
-        mediumLabels.append(TextOverlayLabelMedium2)
-        mediumLabels.append(TextOverlayLabelMedium3)
-
+        //mediumLabels.append(TextOverlayLabelMedium)
+        //mediumLabels.append(TextOverlayLabelMedium1)
+        //mediumLabels.append(TextOverlayLabelMedium2)
+        //mediumLabels.append(TextOverlayLabelMedium3)
+        mediumLabels.append(TextOverlayCenter)
+        
         largeLabels.append(TextOverlayLabelLarge)
         largeLabels.append(TextOverlayLabelLarge1)
         largeLabels.append(TextOverlayLabelLarge2)
@@ -61,6 +64,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         loadStoredValue()
         loadPositionValue()
         loadTextValue()
+        
     }
     override func viewDidDisappear(_ animated: Bool) {
         WidgetCenter.shared.reloadTimelines(ofKind: "NotesWidgetTarget")
@@ -96,6 +100,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
             smallLabels.forEach{label in label.isHidden = false}
             mediumLabels.forEach{label in label.isHidden = true}
             largeLabels.forEach{label in label.isHidden = true}
+            PositionSlider.isHidden = false
             break
         case 1:
             currentImgView = ImageViewMedium
@@ -105,6 +110,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
             smallLabels.forEach{label in label.isHidden = true}
             mediumLabels.forEach{label in label.isHidden = false}
             largeLabels.forEach{label in label.isHidden = true}
+            PositionSlider.isHidden = true
             break
         case 2:
             currentImgView = ImageVIewLarge
@@ -114,6 +120,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
             smallLabels.forEach{label in label.isHidden = true}
             mediumLabels.forEach{label in label.isHidden = true}
             largeLabels.forEach{label in label.isHidden = false}
+            PositionSlider.isHidden = false
             break
         default:
             break
@@ -223,7 +230,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         switch currentPosition {
         case .lower_left:
             smallLabels[1].text = storedTxtData
-            mediumLabels[1].text = storedTxtData
+            mediumLabels[0].text = storedTxtData
             largeLabels[1].text = storedTxtData
             break
         case .lower_right:
@@ -233,12 +240,12 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
             break
         case .upper_left:
             smallLabels[2].text = storedTxtData
-            mediumLabels[2].text = storedTxtData
+            mediumLabels[0].text = storedTxtData
             largeLabels[2].text = storedTxtData
             break
         case .upper_right:
             smallLabels[3].text = storedTxtData
-            mediumLabels[3].text = storedTxtData
+            mediumLabels[0].text = storedTxtData
             largeLabels[3].text = storedTxtData
             break
         default:
