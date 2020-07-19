@@ -122,6 +122,7 @@ func getPosition() -> Alignment{
 
 struct TextOverlay: View {
     var data = getData()
+    
     var body: some View {
         ZStack {
             Text(data.storedTxtData)

@@ -33,6 +33,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
     @IBOutlet weak var DeleteTextButton: UIButton!
     @IBOutlet weak var PositionSlider: UISegmentedControl!
     @IBOutlet weak var CenterPositionLabel: UILabel!
+    @IBOutlet weak var HowToLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,7 +41,22 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
 
-        
+        HowToLabel.text?.append("Widget previews are shown above\n\n")
+        HowToLabel.text?.append("Customize your widget in four steps:\n")
+        HowToLabel.text?.append("1. Select an image from your photos.\n")
+        HowToLabel.text?.append("2. Crop your image.\n")
+        HowToLabel.text?.append("3. Add a text overlay to your widget.\n")
+        HowToLabel.text?.append("4. Choose the text overlay position: \n")
+        HowToLabel.text?.append("\t-Bottom Left.\n")
+        HowToLabel.text?.append("\t-Bottom Right.\n")
+        HowToLabel.text?.append("\t-Top Left.\n")
+        HowToLabel.text?.append("\t-Top Right.\n")
+        HowToLabel.text?.append("\t-Dynamically Changing (10min).\n\n")
+        HowToLabel.text?.append("Add widget to home screen:\n")
+        HowToLabel.text?.append("1. Long press on the home screen\n")
+        HowToLabel.text?.append("2. Tap the plus icon in the top left corner\n")
+        HowToLabel.text?.append("3. Select the widget size\n")
+
         smallLabels.append(TextOverlayLabelSmall)
         smallLabels.append(TextOverlayLabelSmall1)
         smallLabels.append(TextOverlayLabelSmall2)
