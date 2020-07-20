@@ -73,10 +73,18 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         largeLabels.append(TextOverlayLabelLarge2)
         largeLabels.append(TextOverlayLabelLarge3)
 
+        let smallImgViewSize = ImageView.frame.width
+        let mediumImgViewSize = ImageViewMedium.frame.width
+        let largeImgViewSize = ImageVIewLarge.frame.width
+        smallLabels.forEach{label in label.preferredMaxLayoutWidth = smallImgViewSize}
+        mediumLabels.forEach{label in label.preferredMaxLayoutWidth = mediumImgViewSize}
+        largeLabels.forEach{label in label.preferredMaxLayoutWidth = largeImgViewSize}
+        
         addDoneButtonOnKeyboard()
         
         currentImgView = ImageView
         
+        loadWidgetPreview()
         loadStoredValue()
         loadPositionValue()
         loadTextValue()
@@ -107,40 +115,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
             present(picker, animated: true)
     }
     @IBAction func SliderChanged(_ sender: Any) {
-        switch SizeSlider.selectedSegmentIndex {
-        case 0:
-            currentImgView = ImageView
-            ImageView.isHidden = false
-            ImageViewMedium.isHidden = true
-            ImageVIewLarge.isHidden = true
-            smallLabels.forEach{label in label.isHidden = false}
-            mediumLabels.forEach{label in label.isHidden = true}
-            largeLabels.forEach{label in label.isHidden = true}
-            PositionSlider.isHidden = false
-            break
-        case 1:
-            currentImgView = ImageViewMedium
-            ImageView.isHidden = true
-            ImageViewMedium.isHidden = false
-            ImageVIewLarge.isHidden = true
-            smallLabels.forEach{label in label.isHidden = true}
-            mediumLabels.forEach{label in label.isHidden = false}
-            largeLabels.forEach{label in label.isHidden = true}
-            PositionSlider.isHidden = true
-            break
-        case 2:
-            currentImgView = ImageVIewLarge
-            ImageView.isHidden = true
-            ImageViewMedium.isHidden = true
-            ImageVIewLarge.isHidden = false
-            smallLabels.forEach{label in label.isHidden = true}
-            mediumLabels.forEach{label in label.isHidden = true}
-            largeLabels.forEach{label in label.isHidden = false}
-            PositionSlider.isHidden = false
-            break
-        default:
-            break
-        }
+        loadWidgetPreview()
         loadStoredValue()
     }
     @IBAction func DeleteImageClicked(_ sender: Any) {
@@ -220,6 +195,43 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         loadStoredValue()
     }
     
+    func loadWidgetPreview(){
+        switch SizeSlider.selectedSegmentIndex {
+        case 0:
+            currentImgView = ImageView
+            ImageView.isHidden = false
+            ImageViewMedium.isHidden = true
+            ImageVIewLarge.isHidden = true
+            smallLabels.forEach{label in label.isHidden = false}
+            mediumLabels.forEach{label in label.isHidden = true}
+            largeLabels.forEach{label in label.isHidden = true}
+            PositionSlider.isHidden = false
+            break
+        case 1:
+            currentImgView = ImageViewMedium
+            ImageView.isHidden = true
+            ImageViewMedium.isHidden = false
+            ImageVIewLarge.isHidden = true
+            smallLabels.forEach{label in label.isHidden = true}
+            mediumLabels.forEach{label in label.isHidden = false}
+            largeLabels.forEach{label in label.isHidden = true}
+            PositionSlider.isHidden = true
+            break
+        case 2:
+            currentImgView = ImageVIewLarge
+            ImageView.isHidden = true
+            ImageViewMedium.isHidden = true
+            ImageVIewLarge.isHidden = false
+            smallLabels.forEach{label in label.isHidden = true}
+            mediumLabels.forEach{label in label.isHidden = true}
+            largeLabels.forEach{label in label.isHidden = false}
+            PositionSlider.isHidden = false
+            break
+        default:
+            break
+        }
+    }
+    
     func loadStoredValue(){
         var storedImgData: Data!
         if let userDefaults = UserDefaults(suiteName: "group.com.putterfitter.NotesWidget") {
@@ -243,6 +255,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         smallLabels.forEach{label in label.text = ""}
         mediumLabels.forEach{label in label.text = ""}
         largeLabels.forEach{label in label.text = ""}
+                
         switch currentPosition {
         case .lower_left:
             smallLabels[1].text = storedTxtData
