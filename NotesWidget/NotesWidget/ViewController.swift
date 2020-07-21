@@ -34,6 +34,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
     @IBOutlet weak var PositionSlider: UISegmentedControl!
     @IBOutlet weak var CenterPositionLabel: UILabel!
     @IBOutlet weak var HowToLabel: UILabel!
+    var textFieldView: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,11 +77,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         let smallImgViewSize = ImageView.frame.width
         let mediumImgViewSize = ImageViewMedium.frame.width
         let largeImgViewSize = ImageVIewLarge.frame.width
-        smallLabels.forEach{label in label.preferredMaxLayoutWidth = smallImgViewSize}
-        mediumLabels.forEach{label in label.preferredMaxLayoutWidth = mediumImgViewSize}
-        largeLabels.forEach{label in label.preferredMaxLayoutWidth = largeImgViewSize}
-        
-        addDoneButtonOnKeyboard()
+        smallLabels.forEach{label in label.preferredMaxLayoutWidth = (smallImgViewSize-9)}
+        mediumLabels.forEach{label in label.preferredMaxLayoutWidth = (mediumImgViewSize-9)}
+        largeLabels.forEach{label in label.preferredMaxLayoutWidth = (largeImgViewSize-9)}
+                        
+        addCustomKeyboardControls()
         
         currentImgView = ImageView
         
@@ -285,6 +286,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         }
         
         TextOverlayTextbox.text = storedTxtData
+        textFieldView.text = storedTxtData
     }
     func loadPositionValue(){
         var storedPosData: ePosition!
@@ -325,22 +327,30 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         updateStoredValue()
     }
     
-    func addDoneButtonOnKeyboard(){
-            let doneToolbar: UIToolbar = UIToolbar(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50))
-            doneToolbar.barStyle = .default
-
-            let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-            let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(self.doneButtonAction))
+    func addCustomKeyboardControls(){
+        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50))
+        doneToolbar.barStyle = .default
+            
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(self.doneButtonAction))
         
-            let items = [flexSpace, done]
-            doneToolbar.items = items
-            doneToolbar.sizeToFit()
+        textFieldView = UITextField(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width-100, height: 50))
+        textFieldView.addTarget(self, action: #selector(self.textFieldViewAction), for: .editingChanged)
+        let textfieldBarButton = UIBarButtonItem.init(customView: textFieldView)
+        
+        let items = [textfieldBarButton, flexSpace, done]
+        doneToolbar.items = items
+        doneToolbar.sizeToFit()
 
-            TextOverlayTextbox.inputAccessoryView = doneToolbar
-        }
+        TextOverlayTextbox.inputAccessoryView = doneToolbar
+    }
 
     @objc func doneButtonAction(){
-            TextOverlayTextbox.resignFirstResponder()
+        TextOverlayTextbox.resignFirstResponder()
+        textFieldView.resignFirstResponder()
+    }
+    @objc func textFieldViewAction(){
+        TextOverlayTextbox.text = textFieldView.text
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
