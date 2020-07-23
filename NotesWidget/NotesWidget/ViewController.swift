@@ -348,6 +348,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
     @objc func doneButtonAction(){
         TextOverlayTextbox.resignFirstResponder()
         textFieldView.resignFirstResponder()
+        TextOverlayTextbox.endEditing(true)
+        textFieldView.endEditing(true)
     }
     @objc func textFieldViewAction(){
         TextOverlayTextbox.text = textFieldView.text

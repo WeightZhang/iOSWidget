@@ -115,8 +115,6 @@ func getPosition() -> Alignment{
         return AlignmentArray[3]
     case .random_pos:
         return AlignmentArray[Int.random(in: 0...3)]
-    default:
-        return AlignmentArray[1]
     }
 }
 
