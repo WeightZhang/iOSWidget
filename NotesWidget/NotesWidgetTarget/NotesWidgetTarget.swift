@@ -199,3 +199,14 @@ struct NotesWidgetTarget: Widget {
         .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
     }
 }
+
+struct NotesWidgetTarget_Previews: PreviewProvider {
+    static var previews: some View {
+        PlaceholderView()
+            .previewContext(WidgetPreviewContext(family: .systemSmall))
+        PlaceholderView()
+            .previewContext(WidgetPreviewContext(family: .systemMedium))
+        PlaceholderView()
+            .previewContext(WidgetPreviewContext(family: .systemLarge))
+    }
+}
