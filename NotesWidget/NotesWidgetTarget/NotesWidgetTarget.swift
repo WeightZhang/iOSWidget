@@ -134,6 +134,8 @@ struct TextOverlay: View {
     }
 }
 
+var randomText: String = "test"
+
 struct NotesWidgetTargetEntryView : View {
     var entry: Provider.Entry
     
@@ -189,8 +191,7 @@ struct NotesWidgetTarget: Widget {
         IntentConfiguration(
             kind: kind,
             intent: ConfigurationIntent.self,
-            provider: Provider(),
-            placeholder: PlaceholderView()) { entry in
+            provider: Provider() ){ entry in
             NotesWidgetTargetEntryView(entry: entry)
         }
         .configurationDisplayName("Picture Box")
