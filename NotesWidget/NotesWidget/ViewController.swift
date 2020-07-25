@@ -35,13 +35,26 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
     @IBOutlet weak var CenterPositionLabel: UILabel!
     @IBOutlet weak var HowToLabel: UILabel!
     var textFieldView: UITextField!
+    @IBOutlet weak var PageControlView: UIPageControl!
+    @IBOutlet weak var AddNewImageButton: UIButton!
     
+    static var globalVersionNumber: Int = -1
+    var localVersionNumber: Int!
     override func viewDidLoad() {
         super.viewDidLoad()
 
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
 
+        ViewController.globalVersionNumber += 1
+        localVersionNumber = ViewController.globalVersionNumber
+        print("Global Addition \(ViewController.globalVersionNumber)")
+        
+        print("SAVED: \(countSavedData())")
+
+        PageControlView.numberOfPages = ViewController.globalVersionNumber+1
+        PageControlView.currentPage = localVersionNumber
+        
         HowToLabel.text?.append("Widget previews are shown above\n\n")
         HowToLabel.text?.append("Customize your widget in four steps:\n")
         HowToLabel.text?.append("1. Select an image from your photos.\n")
@@ -86,13 +99,15 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         currentImgView = ImageView
         
         loadWidgetPreview()
-        loadStoredValue()
+        loadStoredImageValue()
         loadPositionValue()
         loadTextValue()
         
     }
     override func viewDidDisappear(_ animated: Bool) {
         WidgetCenter.shared.reloadTimelines(ofKind: "NotesWidgetTarget")
+        ViewController.globalVersionNumber -= 1
+        print("Global Dismissed \(ViewController.globalVersionNumber)")
     }
     
     var uploadedImage: UIImage!
@@ -117,22 +132,19 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
     }
     @IBAction func SliderChanged(_ sender: Any) {
         loadWidgetPreview()
-        loadStoredValue()
+        loadStoredImageValue()
     }
     @IBAction func DeleteImageClicked(_ sender: Any) {
-        removeStoredValue()
+        removeStoredImageValue()
     }
     @IBAction func TextChanged(_ sender: Any) {
         updateTextValue()
     }
     @IBAction func TextboxEditing(_ sender: Any) {
         updateTextValue()
-        // TODO:
-        //Prevent overflow by looking at the frame values of the label, thrid column.
     }
     @IBAction func DeleteTextButton(_ sender: Any) {
-        TextOverlayTextbox.text = ""
-        updateTextValue()
+        removeStoredTextValue()
     }
     @IBAction func PositionSliderChanged(_ sender: Any) {
         switch PositionSlider.selectedSegmentIndex {
@@ -157,11 +169,17 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         }
         updatePositionValue()
     }
+    @IBAction func AddNewImageClicked(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let newView = storyboard.instantiateViewController(withIdentifier: "ViewController")
+        show(newView, sender: self)
+        print("Testing")
+    }
     
     func updateStoredValue(){
         if let imgData = uploadedImage?.pngData(){
             if let userDefaults = UserDefaults(suiteName: "group.com.putterfitter.NotesWidget"){
-                userDefaults.set(imgData as Data, forKey: "IMG_DATA")
+                userDefaults.set(imgData as Data, forKey: "IMG_DATA\(localVersionNumber ?? 0)")
             }
         }
         
@@ -172,7 +190,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
     }
     func updateTextValue(){
         if let userDefaults = UserDefaults(suiteName: "group.com.putterfitter.NotesWidget"){
-            userDefaults.set(TextOverlayTextbox.text, forKey: "TEXT_DATA")
+            userDefaults.set(TextOverlayTextbox.text, forKey: "TEXT_DATA\(localVersionNumber ?? 0)")
         }
         
         loadTextValue()
@@ -181,19 +199,32 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
     }
     func updatePositionValue(){
         if let userDefaults = UserDefaults(suiteName: "group.com.putterfitter.NotesWidget"){
-            userDefaults.set(currentPosition.rawValue, forKey: "POS_DATA")
+            userDefaults.set(currentPosition.rawValue, forKey: "POS_DATA\(localVersionNumber ?? 0)")
         }
         
         loadTextValue()
         
         WidgetCenter.shared.reloadTimelines(ofKind: "NotesWidgetTarget")
     }
-    func removeStoredValue(){
+    func removeStoredImageValue(){
         if let userDefaults = UserDefaults(suiteName: "group.com.putterfitter.NotesWidget"){
-            userDefaults.set(nil, forKey: "IMG_DATA")
+            userDefaults.set(nil, forKey: "IMG_DATA\(localVersionNumber ?? 0)")
         }
         
-        loadStoredValue()
+        loadStoredImageValue()
+    }
+    func removeStoredTextValue(){
+        if let userDefaults = UserDefaults(suiteName: "group.com.putterfitter.NotesWidget"){
+            userDefaults.set(nil, forKey: "TEXT_DATA\(localVersionNumber ?? 0)")
+        }
+        if let userDefaults = UserDefaults(suiteName: "group.com.putterfitter.NotesWidget"){
+            userDefaults.set(nil, forKey: "POS_DATA\(localVersionNumber ?? 0)")
+        }
+        
+        loadTextValue()
+        loadPositionValue()
+        
+        removeStoredImageValue()
     }
     
     func loadWidgetPreview(){
@@ -233,10 +264,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         }
     }
     
-    func loadStoredValue(){
+    func loadStoredImageValue(){
         var storedImgData: Data!
         if let userDefaults = UserDefaults(suiteName: "group.com.putterfitter.NotesWidget") {
-            storedImgData = userDefaults.data(forKey: "IMG_DATA")
+            storedImgData = userDefaults.data(forKey: "IMG_DATA\(localVersionNumber ?? 0)")
         }
         if(storedImgData != nil){
             currentImgView.image = UIImage.init(data: storedImgData)
@@ -250,7 +281,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
     func loadTextValue(){
         var storedTxtData: String = ""
         if let userDefaults = UserDefaults(suiteName: "group.com.putterfitter.NotesWidget") {
-            storedTxtData = userDefaults.string(forKey: "TEXT_DATA") ?? ""
+            storedTxtData = userDefaults.string(forKey: "TEXT_DATA\(localVersionNumber ?? 0)") ?? ""
         }
         //add overlay to selected image
         smallLabels.forEach{label in label.text = ""}
@@ -291,7 +322,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
     func loadPositionValue(){
         var storedPosData: ePosition!
         if let userDefaults = UserDefaults(suiteName: "group.com.putterfitter.NotesWidget") {
-            storedPosData = ePosition(rawValue: userDefaults.string(forKey: "POS_DATA") ?? "LR")
+            storedPosData = ePosition(rawValue: userDefaults.string(forKey: "POS_DATA\(localVersionNumber ?? 0)") ?? "LR")
         }
 
         currentPosition = storedPosData
@@ -316,6 +347,21 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
             break
         }
         
+    }
+    
+    func countSavedData() -> Int{
+        var foundImgData: Int = 0
+        var storedImgData: Data!
+        repeat {
+            if let userDefaults = UserDefaults(suiteName: "group.com.putterfitter.NotesWidget") {
+                storedImgData = userDefaults.data(forKey: "IMG_DATA\(foundImgData)")
+                if(storedImgData != nil){
+                    foundImgData += 1
+                }
+            }
+        } while(storedImgData != nil)
+        
+        return foundImgData
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {

@@ -65,9 +65,9 @@ func getData() -> DataStruct {
     var data: DataStruct = DataStruct()
     
     if let userDefaults = UserDefaults(suiteName: "group.com.putterfitter.NotesWidget") {
-        data.storedImgData = userDefaults.data(forKey: "IMG_DATA")
-        data.storedTxtData = userDefaults.string(forKey: "TEXT_DATA")
-        data.storedPosData = ePosition(rawValue: userDefaults.string(forKey: "POS_DATA") ?? "LR")
+        data.storedImgData = userDefaults.data(forKey: "IMG_DATA0")
+        data.storedTxtData = userDefaults.string(forKey: "TEXT_DATA0")
+        data.storedPosData = ePosition(rawValue: userDefaults.string(forKey: "POS_DATA0") ?? "LR")
     }
     
     if(data.storedImgData == nil){
@@ -99,7 +99,7 @@ func getPosition(pos: ePosition) -> Alignment{
 func getPosition() -> Alignment{
     var storedPosData: ePosition = .lower_left
     if let userDefaults = UserDefaults(suiteName: "group.com.putterfitter.NotesWidget") {
-        storedPosData = ePosition(rawValue: userDefaults.string(forKey: "POS_DATA") ?? "LR")!
+        storedPosData = ePosition(rawValue: userDefaults.string(forKey: "POS_DATA0") ?? "LR")!
     }
     
     let AlignmentArray: [Alignment] = [Alignment.bottomLeading, Alignment.bottomTrailing, Alignment.topLeading, Alignment.topTrailing]
@@ -118,6 +118,21 @@ func getPosition() -> Alignment{
     }
 }
 
+func countSavedData() -> Int{
+    var foundImgData: Int = 0
+    var storedImgData: Data!
+    repeat {
+        if let userDefaults = UserDefaults(suiteName: "group.com.putterfitter.NotesWidget") {
+            storedImgData = userDefaults.data(forKey: "IMG_DATA\(foundImgData)")
+            if(storedImgData != nil){
+                foundImgData += 1
+            }
+        }
+    } while(storedImgData != nil)
+    
+    return foundImgData
+}
+
 struct TextOverlay: View {
     var data = getData()
     
@@ -133,8 +148,6 @@ struct TextOverlay: View {
         .padding(6)
     }
 }
-
-var randomText: String = "test"
 
 struct NotesWidgetTargetEntryView : View {
     var entry: Provider.Entry
