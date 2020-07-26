@@ -212,6 +212,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         }
         
         loadStoredImageValue()
+        removeStoredTextValue()
     }
     func removeStoredTextValue(){
         if let userDefaults = UserDefaults(suiteName: "group.com.putterfitter.NotesWidget"){
@@ -223,8 +224,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         
         loadTextValue()
         loadPositionValue()
-        
-        removeStoredImageValue()
     }
     
     func loadWidgetPreview(){

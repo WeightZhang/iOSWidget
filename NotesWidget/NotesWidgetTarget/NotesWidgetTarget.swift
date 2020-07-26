@@ -9,10 +9,30 @@ import WidgetKit
 import SwiftUI
 import Intents
 
+
+/*
+ 
+ VStack{
+     Image(uiImage: UIImage.init(data: data.storedImgData)!)
+         .resizable()
+         .aspectRatio(contentMode: .fill)
+
+ }.background(Color.black)
+ .overlay(data.storedTxtData != "" ? TextOverlay() : nil, alignment: entry.alignment)
+ 
+ 
+ */
 struct Provider: IntentTimelineProvider {
     public func snapshot(for configuration: ConfigurationIntent, with context: Context, completion: @escaping (SimpleEntry) -> ()) {
         
-        let entry = SimpleEntry(date: Date(), configuration: configuration, alignment: getPosition())
+        let position = getRandomPos()
+        let widgetData: DataStruct = getData(loadPos: position)
+                
+        let entry = SimpleEntry(date: Date(),
+                                configuration: configuration,
+                                image: UIImage.init(data: widgetData.storedImgData)!,
+                                text: widgetData.storedTxtData,
+                                alignment: getPosition(loadPos: position))
         completion(entry)
     }
 
@@ -23,7 +43,14 @@ struct Provider: IntentTimelineProvider {
         let currentDate = Date()
         for hourOffset in 0 ..< 6 {
             let entryDate = Calendar.current.date(byAdding: .minute, value: hourOffset*10, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, configuration: configuration, alignment: getPosition())
+            let position = getRandomPos()
+            let widgetData: DataStruct = getData(loadPos: position)
+            
+            let entry = SimpleEntry(date: entryDate,
+                                    configuration: configuration,
+                                    image: UIImage.init(data: widgetData.storedImgData)!,
+                                    text: widgetData.storedTxtData,
+                                    alignment: getPosition(loadPos: position))
             entries.append(entry)
         }
 
@@ -35,6 +62,8 @@ struct Provider: IntentTimelineProvider {
 struct SimpleEntry: TimelineEntry {
     public let date: Date
     public let configuration: ConfigurationIntent
+    public let image: UIImage
+    public let text: String
     public let alignment: Alignment
 }
 
@@ -61,13 +90,13 @@ struct DataStruct {
     var storedPosData: ePosition!
 }
 
-func getData() -> DataStruct {
+func getData(loadPos: Int) -> DataStruct {
     var data: DataStruct = DataStruct()
     
     if let userDefaults = UserDefaults(suiteName: "group.com.putterfitter.NotesWidget") {
-        data.storedImgData = userDefaults.data(forKey: "IMG_DATA0")
-        data.storedTxtData = userDefaults.string(forKey: "TEXT_DATA0")
-        data.storedPosData = ePosition(rawValue: userDefaults.string(forKey: "POS_DATA0") ?? "LR")
+        data.storedImgData = userDefaults.data(forKey: "IMG_DATA\(loadPos)")
+        data.storedTxtData = userDefaults.string(forKey: "TEXT_DATA\(loadPos)")
+        data.storedPosData = ePosition(rawValue: userDefaults.string(forKey: "POS_DATA\(loadPos)") ?? "LR")
     }
     
     if(data.storedImgData == nil){
@@ -96,10 +125,10 @@ func getPosition(pos: ePosition) -> Alignment{
         return Alignment.bottomTrailing
     }
 }
-func getPosition() -> Alignment{
+func getPosition(loadPos: Int) -> Alignment{
     var storedPosData: ePosition = .lower_left
     if let userDefaults = UserDefaults(suiteName: "group.com.putterfitter.NotesWidget") {
-        storedPosData = ePosition(rawValue: userDefaults.string(forKey: "POS_DATA0") ?? "LR")!
+        storedPosData = ePosition(rawValue: userDefaults.string(forKey: "POS_DATA\(loadPos)") ?? "LR")!
     }
     
     let AlignmentArray: [Alignment] = [Alignment.bottomLeading, Alignment.bottomTrailing, Alignment.topLeading, Alignment.topTrailing]
@@ -132,13 +161,16 @@ func countSavedData() -> Int{
     
     return foundImgData
 }
+func getRandomPos() -> Int{
+    return Int.random(in: 0...(countSavedData()-1))
+}
 
 struct TextOverlay: View {
-    var data = getData()
+    var entry: Provider.Entry
     
     var body: some View {
         ZStack {
-            Text(data.storedTxtData)
+            Text(entry.text)
                 .font(.callout)
                 .padding(6)
                 .foregroundColor(.white)
@@ -151,8 +183,6 @@ struct TextOverlay: View {
 
 struct NotesWidgetTargetEntryView : View {
     var entry: Provider.Entry
-    
-    var data = getData()
     @Environment(\.widgetFamily) var family
     
     @ViewBuilder
@@ -160,37 +190,37 @@ struct NotesWidgetTargetEntryView : View {
         switch family {
         case .systemSmall:
             VStack{
-                Image(uiImage: UIImage.init(data: data.storedImgData)!)
+                Image(uiImage: entry.image)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
 
             }.background(Color.black)
-            .overlay(data.storedTxtData != "" ? TextOverlay() : nil, alignment: entry.alignment)
+            .overlay(entry.text != "" ? TextOverlay(entry: entry) : nil, alignment: entry.alignment)
         case .systemMedium:
             VStack{
-                Image(uiImage: UIImage.init(data: data.storedImgData)!)
+                Image(uiImage: entry.image)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
 
             }.background(Color.black)
             //.overlay(data.storedTxtData != "" ? TextOverlay() : nil, alignment: entry.alignment)
-            .overlay(data.storedTxtData != "" ? TextOverlay().padding(Edge.Set.top, CGFloat(100)) : nil, alignment: Alignment.center)
+            .overlay(entry.text != "" ? TextOverlay(entry: entry).padding(Edge.Set.top, CGFloat(100)) : nil, alignment: Alignment.center)
         case .systemLarge:
             VStack{
-                Image(uiImage: UIImage.init(data: data.storedImgData)!)
+                Image(uiImage: entry.image)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
 
             }.background(Color.black)
-            .overlay(data.storedTxtData != "" ? TextOverlay().padding() : nil, alignment: entry.alignment)
+            .overlay(entry.text != "" ? TextOverlay(entry: entry).padding() : nil, alignment: entry.alignment)
         default:
             VStack{
-                Image(uiImage: UIImage.init(data: data.storedImgData)!)
+                Image(uiImage: entry.image)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
 
             }.background(Color.black)
-            .overlay(data.storedTxtData != "" ? TextOverlay() : nil, alignment: entry.alignment)
+            .overlay(entry.text != "" ? TextOverlay(entry: entry) : nil, alignment: entry.alignment)
         }
         
     }
