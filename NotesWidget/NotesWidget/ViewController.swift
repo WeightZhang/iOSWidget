@@ -37,6 +37,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
     var textFieldView: UITextField!
     @IBOutlet weak var PageControlView: UIPageControl!
     @IBOutlet weak var AddNewImageButton: UIButton!
+    @IBOutlet weak var LastImageButton: UIButton!
     
     static var globalVersionNumber: Int = -1
     var localVersionNumber: Int!
@@ -48,12 +49,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 
         ViewController.globalVersionNumber += 1
         localVersionNumber = ViewController.globalVersionNumber
-        print("Global Addition \(ViewController.globalVersionNumber)")
         
-        print("SAVED: \(countSavedData())")
-
-        PageControlView.numberOfPages = ViewController.globalVersionNumber+1
+        PageControlView.numberOfPages = countSavedData()
         PageControlView.currentPage = localVersionNumber
+        
+        if(localVersionNumber == 0){
+            LastImageButton.isEnabled = false
+        }
         
         HowToLabel.text?.append("Widget previews are shown above\n\n")
         HowToLabel.text?.append("Customize your widget in four steps:\n")
@@ -107,7 +109,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
     override func viewDidDisappear(_ animated: Bool) {
         WidgetCenter.shared.reloadTimelines(ofKind: "NotesWidgetTarget")
         ViewController.globalVersionNumber -= 1
-        print("Global Dismissed \(ViewController.globalVersionNumber)")
     }
     
     var uploadedImage: UIImage!
@@ -139,6 +140,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
     }
     @IBAction func TextChanged(_ sender: Any) {
         updateTextValue()
+        WidgetCenter.shared.reloadTimelines(ofKind: "NotesWidgetTarget")
     }
     @IBAction func TextboxEditing(_ sender: Any) {
         updateTextValue()
@@ -170,13 +172,22 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         updatePositionValue()
     }
     @IBAction func AddNewImageClicked(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let newView = storyboard.instantiateViewController(withIdentifier: "ViewController")
-        show(newView, sender: self)
-        print("Testing")
+        if(isImageDataLoaded()){
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let newView = storyboard.instantiateViewController(withIdentifier: "ViewController")
+            newView.modalPresentationStyle = .overFullScreen
+            show(newView, sender: self)
+        }
+    }
+    @IBAction func LastImageClicked(_ sender: Any) {
+        if(localVersionNumber != 0){
+            dismiss(animated: true) {
+                
+            }
+        }
     }
     
-    func updateStoredValue(){
+    func updateStoredImageValue(){
         if let imgData = uploadedImage?.pngData(){
             if let userDefaults = UserDefaults(suiteName: "group.com.putterfitter.NotesWidget"){
                 userDefaults.set(imgData as Data, forKey: "IMG_DATA\(localVersionNumber ?? 0)")
@@ -193,9 +204,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
             userDefaults.set(TextOverlayTextbox.text, forKey: "TEXT_DATA\(localVersionNumber ?? 0)")
         }
         
-        loadTextValue()
-        
-        WidgetCenter.shared.reloadTimelines(ofKind: "NotesWidgetTarget")
+        loadTextValue()        
     }
     func updatePositionValue(){
         if let userDefaults = UserDefaults(suiteName: "group.com.putterfitter.NotesWidget"){
@@ -347,20 +356,33 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         }
         
     }
+    func isImageDataLoaded() -> Bool {
+        var storedImgData: Data!
+        if let userDefaults = UserDefaults(suiteName: "group.com.putterfitter.NotesWidget") {
+            storedImgData = userDefaults.data(forKey: "IMG_DATA\(localVersionNumber ?? 0)")
+            if(storedImgData != nil){
+                return true
+            }
+        }
+        return false
+    }
     
     func countSavedData() -> Int{
-        var foundImgData: Int = 0
+        var foundImgDataCounter: Int = 0
         var storedImgData: Data!
         repeat {
             if let userDefaults = UserDefaults(suiteName: "group.com.putterfitter.NotesWidget") {
-                storedImgData = userDefaults.data(forKey: "IMG_DATA\(foundImgData)")
+                storedImgData = userDefaults.data(forKey: "IMG_DATA\(foundImgDataCounter)")
                 if(storedImgData != nil){
-                    foundImgData += 1
+                    foundImgDataCounter += 1
+                }
+                else if(foundImgDataCounter == localVersionNumber){
+                    foundImgDataCounter += 1    //Data on the loaded page is nil, we still want page to count
                 }
             }
         } while(storedImgData != nil)
         
-        return foundImgData
+        return foundImgDataCounter
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -369,7 +391,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         dismiss(animated: true)
 
         uploadedImage = image
-        updateStoredValue()
+        updateStoredImageValue()
     }
     
     func addCustomKeyboardControls(){

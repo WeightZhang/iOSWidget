@@ -234,7 +234,8 @@ struct NotesWidgetTarget: Widget {
         IntentConfiguration(
             kind: kind,
             intent: ConfigurationIntent.self,
-            provider: Provider() ){ entry in
+            provider: Provider(),
+            placeholder: PlaceholderView() ){ entry in
             NotesWidgetTargetEntryView(entry: entry)
         }
         .configurationDisplayName("Picture Box")
