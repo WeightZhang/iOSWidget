@@ -6,18 +6,35 @@
 	<dict>
 		<key>NotesWidget.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>2</integer>
-		</dict>
-		<key>NotesWidgetTargetExtension.xcscheme_^#shared#^_</key>
-		<dict>
+			<key>isShown</key>
+			<true/>
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
-		<key>PhotoboxWidgetTargetExtension.xcscheme_^#shared#^_</key>
+		<key>NotesWidgetTargetExtension.xcscheme_^#shared#^_</key>
 		<dict>
+			<key>isShown</key>
+			<true/>
 			<key>orderHint</key>
 			<integer>0</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>23C92BA724AF8DF3007A1A26</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>23C92BC224AF9DC4007A1A26</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>23CA1E8E24CFC454003E6F35</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>

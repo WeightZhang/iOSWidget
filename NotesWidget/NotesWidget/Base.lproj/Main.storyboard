@@ -20,7 +20,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Ps-JL-HjC">
-                                        <rect key="frame" x="0.0" y="0.0" width="413" height="1350"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="413" height="1450"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photobox Widget" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iai-6E-gsA">
                                                 <rect key="frame" x="8" y="50" width="397" height="40"/>
@@ -271,12 +271,16 @@
                                                 <state key="normal" title="Last Image">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <state key="disabled">
+                                                    <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
                                                 <connections>
                                                     <action selector="LastImageClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="XRF-v8-FEM"/>
                                                 </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <gestureRecognizers/>
                                         <constraints>
                                             <constraint firstItem="nRO-de-JvP" firstAttribute="top" secondItem="3Ps-JL-HjC" secondAttribute="top" constant="247" id="0Fg-Fj-zCk"/>
                                             <constraint firstAttribute="trailing" secondItem="abA-Ll-O1e" secondAttribute="trailing" constant="18" id="1dx-hB-WMu"/>
@@ -321,7 +325,7 @@
                                             <constraint firstItem="MwG-GD-Red" firstAttribute="top" secondItem="c6w-1Q-POO" secondAttribute="bottom" constant="111" id="aN4-Pg-Pj9"/>
                                             <constraint firstItem="D3X-kQ-TcH" firstAttribute="leading" secondItem="3Ps-JL-HjC" secondAttribute="leading" constant="33" id="awP-Yi-fFh"/>
                                             <constraint firstItem="L5A-Rj-b76" firstAttribute="top" secondItem="hIo-Rh-2g2" secondAttribute="bottom" constant="-27" id="cKV-9N-8Bp"/>
-                                            <constraint firstAttribute="height" constant="1350" id="eKY-yM-FDD"/>
+                                            <constraint firstAttribute="height" constant="1450" id="eKY-yM-FDD"/>
                                             <constraint firstItem="0Or-Dz-gBU" firstAttribute="leading" secondItem="3Ps-JL-HjC" secondAttribute="leading" constant="129" id="fPQ-NV-Tfs"/>
                                             <constraint firstAttribute="trailing" secondItem="nnu-fm-KLU" secondAttribute="trailing" constant="32" id="fbk-Gq-BSk"/>
                                             <constraint firstAttribute="trailing" secondItem="OUv-sg-njZ" secondAttribute="trailing" constant="62" id="flf-Rf-Fp6"/>
@@ -352,6 +356,10 @@
                                             <constraint firstItem="ujk-rO-ZdH" firstAttribute="top" secondItem="3Ps-JL-HjC" secondAttribute="top" constant="572" id="xz4-uj-Sb3"/>
                                             <constraint firstItem="wOQ-bG-azG" firstAttribute="top" secondItem="3Ps-JL-HjC" secondAttribute="top" constant="151" id="yn2-E9-gV3"/>
                                         </constraints>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="f0m-VO-trb" appends="YES" id="TU4-bs-0YP"/>
+                                            <outletCollection property="gestureRecognizers" destination="1fE-8n-HLo" appends="YES" id="4H2-zO-EFt"/>
+                                        </connections>
                                     </view>
                                 </subviews>
                                 <constraints>
@@ -406,6 +414,16 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="right" id="f0m-VO-trb">
+                    <connections>
+                        <action selector="SwipedRight:" destination="BYZ-38-t0r" id="7mw-PN-RQ9"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="left" id="1fE-8n-HLo">
+                    <connections>
+                        <action selector="SwipeLeft:" destination="BYZ-38-t0r" id="ANX-zh-DEk"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="18.840579710144929" y="107.8125"/>
         </scene>

@@ -69,9 +69,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         HowToLabel.text?.append("\t-Top Right.\n")
         HowToLabel.text?.append("\t-Dynamically Changing (10min).\n\n")
         HowToLabel.text?.append("Add widget to home screen:\n")
-        HowToLabel.text?.append("1. Long press on the home screen\n")
-        HowToLabel.text?.append("2. Tap the plus icon in the top left corner\n")
-        HowToLabel.text?.append("3. Select the widget size\n")
+        HowToLabel.text?.append("1. Long press on the home screen.\n")
+        HowToLabel.text?.append("2. Tap the plus icon in the top left corner.\n")
+        HowToLabel.text?.append("3. Select the widget size.\n\n")
+        HowToLabel.text?.append("Add and Remove multiple photos\n")
+        HowToLabel.text?.append(" - The widget selects a random photo every 10min.\n")
+        HowToLabel.text?.append(" - Add as many as you want.\n")
+
 
         smallLabels.append(TextOverlayLabelSmall)
         smallLabels.append(TextOverlayLabelSmall1)
@@ -172,19 +176,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         updatePositionValue()
     }
     @IBAction func AddNewImageClicked(_ sender: Any) {
-        if(isImageDataLoaded()){
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let newView = storyboard.instantiateViewController(withIdentifier: "ViewController")
-            newView.modalPresentationStyle = .overFullScreen
-            show(newView, sender: self)
-        }
+        addNewImageView()
     }
     @IBAction func LastImageClicked(_ sender: Any) {
-        if(localVersionNumber != 0){
-            dismiss(animated: true) {
-                
-            }
-        }
+        lastImageView()
     }
     
     func updateStoredImageValue(){
@@ -385,6 +380,23 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         return foundImgDataCounter
     }
     
+    func addNewImageView(){
+        if(isImageDataLoaded()){
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let newView = storyboard.instantiateViewController(withIdentifier: "ViewController")
+            newView.modalPresentationStyle = .overFullScreen
+            show(newView, sender: self)
+        }
+    }
+    
+    func lastImageView(){
+        if(localVersionNumber != 0){
+            dismiss(animated: true) {
+                
+            }
+        }
+    }
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[.editedImage] as? UIImage else { return }
 
@@ -435,5 +447,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
             self.view.frame.origin.y = 0
         }
     }
-
+    @IBAction func SwipedRight(_ sender: Any) {
+        lastImageView()
+    }
+    @IBAction func SwipeLeft(_ sender: Any) {
+        addNewImageView()
+    }
+    
 }
