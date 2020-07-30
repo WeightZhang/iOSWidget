@@ -372,7 +372,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
                     foundImgDataCounter += 1
                 }
                 else if(foundImgDataCounter == localVersionNumber){
-                    foundImgDataCounter += 1    //Data on the loaded page is nil, we still want page to count
+                    foundImgDataCounter += 1    //Image on the loaded page is nil, we still want page to count
                 }
             }
         } while(storedImgData != nil)
@@ -391,6 +391,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
     
     func lastImageView(){
         if(localVersionNumber != 0){
+            if let parent = presentingViewController as? ViewController{
+                parent.PageControlView.numberOfPages = parent.countSavedData()
+            }
             dismiss(animated: true) {
                 
             }

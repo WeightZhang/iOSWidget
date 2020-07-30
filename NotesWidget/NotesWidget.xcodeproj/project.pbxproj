@@ -20,8 +20,6 @@
 		23C92BD024AF9DC4007A1A26 /* NotesWidgetTarget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 23C92BCC24AF9DC4007A1A26 /* NotesWidgetTarget.intentdefinition */; };
 		23C92BD124AF9DC4007A1A26 /* NotesWidgetTarget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 23C92BCC24AF9DC4007A1A26 /* NotesWidgetTarget.intentdefinition */; };
 		23C92BD424AF9DC4007A1A26 /* NotesWidgetTargetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 23C92BC324AF9DC4007A1A26 /* NotesWidgetTargetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		23CA1E9024CFC454003E6F35 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23C92BC524AF9DC4007A1A26 /* WidgetKit.framework */; };
-		23CA1E9124CFC454003E6F35 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23C92BC724AF9DC4007A1A26 /* SwiftUI.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,7 +64,6 @@
 		23C92BCD24AF9DC4007A1A26 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		23C92BCF24AF9DC4007A1A26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		23C92BD924AFC4FF007A1A26 /* NotesWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NotesWidget.entitlements; sourceTree = "<group>"; };
-
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,15 +80,6 @@
 			files = (
 				23C92BC824AF9DC4007A1A26 /* SwiftUI.framework in Frameworks */,
 				23C92BC624AF9DC4007A1A26 /* WidgetKit.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		23CA1E8C24CFC454003E6F35 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				23CA1E9124CFC454003E6F35 /* SwiftUI.framework in Frameworks */,
-				23CA1E9024CFC454003E6F35 /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -114,7 +102,6 @@
 			children = (
 				23C92BA824AF8DF3007A1A26 /* NotesWidget.app */,
 				23C92BC324AF9DC4007A1A26 /* NotesWidgetTargetExtension.appex */,
-
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -193,7 +180,6 @@
 			productReference = 23C92BC324AF9DC4007A1A26 /* NotesWidgetTargetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -207,9 +193,6 @@
 						CreatedOnToolsVersion = 12.0;
 					};
 					23C92BC224AF9DC4007A1A26 = {
-						CreatedOnToolsVersion = 12.0;
-					};
-					23CA1E8E24CFC454003E6F35 = {
 						CreatedOnToolsVersion = 12.0;
 					};
 				};
@@ -252,13 +235,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		23CA1E8D24CFC454003E6F35 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -279,13 +255,6 @@
 			files = (
 				23C92BCB24AF9DC4007A1A26 /* NotesWidgetTarget.swift in Sources */,
 				23C92BD024AF9DC4007A1A26 /* NotesWidgetTarget.intentdefinition in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		23CA1E8B24CFC454003E6F35 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -443,7 +412,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = NotesWidget/NotesWidget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = N9WD753NH2;
 				INFOPLIST_FILE = NotesWidget/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -465,7 +434,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = NotesWidget/NotesWidget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = N9WD753NH2;
 				INFOPLIST_FILE = NotesWidget/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -486,7 +455,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = NotesWidgetTargetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = N9WD753NH2;
 				INFOPLIST_FILE = NotesWidgetTarget/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -509,7 +478,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = NotesWidgetTargetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = N9WD753NH2;
 				INFOPLIST_FILE = NotesWidgetTarget/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -525,7 +494,6 @@
 			};
 			name = Release;
 		};
-
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -556,7 +524,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-
 /* End XCConfigurationList section */
 	};
 	rootObject = 23C92BA024AF8DF3007A1A26 /* Project object */;
