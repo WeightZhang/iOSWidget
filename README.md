@@ -15,3 +15,8 @@ Built using Swift.
 
 # Read about it
 https://medium.com/@andrew.rotert/develop-ios-14-home-screen-widget-from-scratch-216d3f2b4c99?sk=6f3d1b430e3d0a28d94612114af5909f
+
+# Preview
+Parent App                 |  Widget
+:-------------------------:|:-------------------------:
+![alt text 1](https://github.com/ajrotert/iOSWidget/blob/master/ios-gif-widget.gif?raw=true)  |   ![alt text 2](https://github.com/ajrotert/iOSWidget/blob/master/ios-png-widget.png?raw=true)
