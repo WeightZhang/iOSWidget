@@ -9,19 +9,6 @@ import WidgetKit
 import SwiftUI
 import Intents
 
-
-/*
- 
- VStack{
-     Image(uiImage: UIImage.init(data: data.storedImgData)!)
-         .resizable()
-         .aspectRatio(contentMode: .fill)
-
- }.background(Color.black)
- .overlay(data.storedTxtData != "" ? TextOverlay() : nil, alignment: entry.alignment)
- 
- 
- */
 struct Provider: IntentTimelineProvider {
     public func snapshot(for configuration: ConfigurationIntent, with context: Context, completion: @escaping (SimpleEntry) -> ()) {
         
